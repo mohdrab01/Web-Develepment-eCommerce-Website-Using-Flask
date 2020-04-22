@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<center>
+  
+<div class="login-page">
+  <div class="form">
+    <form action="/signup" method="POST">
+      <div class="input-group">
+        <input type="text" name="username" placeholder="Pick a Username"/>
+      </div>
+      <div class="input-group">
+        <input type="text" name="email" placeholder="Enter your email"/>
+      </div>
+      <div class="input-group">
+        <input type="password" name="password" placeholder="Pick a Password"/>
+      </div>
+      <div class="input-group-btn">
+        <button class="btn btn-primary" type="submit">SIGNUP</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</center>
+
+{% endblock content %}

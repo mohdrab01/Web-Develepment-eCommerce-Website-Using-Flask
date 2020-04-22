@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+<center>
+<br>  
+<div class="container">
+  <div class="row">
+    {% for p in product %}
+    <br>
+    <div class="col-md-5">
+      <div class="card">
+      <img src="{{url_for('static', filename='uploads/' + p.image + '.jpg')}}" alt="{{p.product_name}}" class="card-img-top" height="250" width="250">
+        <div class="card-body">
+          <h5 class="text-center">{{p.product_name}}</h5>
+          <p class="text-center"><strike>{{p.regular_price}}</strike>Rs.</p>
+          <p class="text-center">{{p.discounted_price}} Rs.</p>
+          <p class="text-center">{{p.rating}}</p>
+        </div>
+        <div class="card-footer">
+          <p class="float-left">{{order.ordered_date}}</p>
+          <a href='/payment' class="float-right bth-sm btn-warning">Proceed to PAY</a> 
+          <!-- <form action="{{url_for('payment')}}" method="POST">
+            <input type="hidden" name="productid" value="{{p.productid}}">
+            <button type="submit" class="btn-sm btn-warning">Proceed to PAY</button>
+          </form>  -->
+        </div>
+      </div>
+    </div>
+    <br> 
+    <br>
+    {% endfor %}
+  </div>
+</div>
+<br>
+</center>
+{% endblock content %}
