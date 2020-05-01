@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<center>
+<br>
+<div class="login-page"> 
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Feedback</h4>
+    <form>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" placeholder="">
+      </div> 
+      <div class="form-group">
+        <label>What is message about?</label>
+        <select class="form-control">
+          <option>Select</option>
+          <option>Technical issue</option>
+          <option>Money refund</option>
+          <option>Recommendation</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Give a Description below:</label>
+        <textarea class="form-control" rows="5"></textarea>
+      </div>
+      <button class="btn btn-primary btn-block">Send</button>
+    </form>
+  </div>
+</div>
+</div>
+</center>
+{% endblock content %}
