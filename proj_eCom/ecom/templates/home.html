@@ -2,12 +2,13 @@
 {% block content %}
 <center>
 <br>  
+<br>  
 <div class="container">
   <div class="row">
     {% for p in products %}
     <br>
-    <div class="col-md-5">
-      <div class="card">
+    <div class="col">
+      <div class="card mt-5" style="width: 25rem; height: 44rem">
       <img src="{{url_for('static', filename='uploads/' + p.image + '.jpg')}}" alt="{{p.product_name}}" class="card-img-top" height="250" width="250">
         <div class="card-body">
           <h5 class="text-center">{{p.product_name}}</h5>
@@ -16,7 +17,7 @@
           <p class="text-center">{{p.rating}}</p>
         </div>
         <div class="card-footer">
-          <!-- <a href="add_to_cart" class="float-right bth-sm btn-warning">Add to Cart</a> -->
+          <a href="/details/{{p.productid}}" class="float-left btn btn-primary" > <span class="text">Details</span></a>
           <!-- <form action="{{url_for('add_to_cart')}}" method="POST">
             <input type="hidden" name="productid" value="{{p.productid}}">
             <button type="submit" class="btn-sm btn-warning">Add to Cart</button>
@@ -25,8 +26,8 @@
       </div>
     </div>
     <br> 
-    <br>
     {% endfor %}
+    <br>
   </div>
 </div>
 <br>
