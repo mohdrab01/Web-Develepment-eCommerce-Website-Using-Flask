@@ -32,7 +32,8 @@ def signup():
 		user=User(username=request.form['username'],email=request.form['email'],password=request.form['password'])
 		db.session.add(user)
 		db.session.commit()
-		return redirect(url_for('login'))
+		flash('Registered succesfully!','success')
+		return redirect(url_for('login'))		
 	return render_template('signup.html',title='signup')
 
 ##### LOGIN PAGE #####
@@ -54,6 +55,20 @@ def login():
 			flash('Invalid email or Password!','danger')
 		return redirect(url_for('home'))
 	return render_template('login.html',title='login',error=error)
+
+##### A/C RECOVERY PAGE #####
+@app.route('/ac_recovery',methods=['GET','POST'])
+def ac_recovery():
+	if request.method=='POST':
+		email=request.form['email']
+		user = User.query.filter_by(email=email).first()
+		if user:
+			flash('A recovery mail has been sent to your inbox. Please Check!','success')
+			return redirect(url_for('ac_recovery'))
+		else:
+			flash('This email has not been registered yet. Please Signup first!','danger')
+			return redirect(url_for('signup'))
+	return render_template('ac_recovery.html',title='ac_recovery')
 
 
 ##### INDEX PAGE #####
@@ -99,7 +114,7 @@ def cart():
 def add_to_cart():
 	if request.method=='POST':
 		productid=request.form['productid']
-		quantity=15
+		quantity=1
 		userid=current_user.id
 		cart=Cart(id=userid,productid=productid,quantity=quantity)
 		cart1=Cart.query.filter_by(id=userid,productid=productid).first()
@@ -107,11 +122,37 @@ def add_to_cart():
 			flash('Item already in cart!','warning')
 			return redirect(url_for('index'))	
 		else:
+			# db.session.begin_nested()
 			db.session.add(cart)
+			# db.session.flush()
 			db.session.commit()
 			flash('Item added to cart succesfully!','success')
 			return redirect(url_for('index'))
 	# return render_template('cart.html',title='cart')
+
+##### DELETE GADGET FROM CART #####
+# @login_required
+# @app.route('/del_from_cart/<string:pid>',methods=['GET','POST'])
+# def del_from_cart(pid):
+# 	# if request.method=='POST':
+# 	userid=current_user.id
+# 	quantity=1
+# 	cart=Cart(id=userid,productid=pid,quantity=quantity)
+# 	cart1=Cart.query.filter_by(id=userid,productid=pid).first()
+# 	if cart1 :
+# 		Cart.query.filter(id==userid and productid==pid).delete()
+# 		# db.session.rollback()
+# 		# db.session.commit()
+# 		# db.session.flush()
+# 		flash('Item deleted from cart!','success')
+# 		return redirect(url_for('cart'))
+# 	else:
+# 		flash('Item not in cart!','danger')
+# 		return redirect(url_for('cart'))
+# 		# return redirect(url_for('cart'))
+# 	# return render_template('cart.html',title='cart')
+
+
 
 ##### PLACE ORDER FROM CART #####
 @login_required
@@ -120,7 +161,7 @@ def place_order():
 	try:
 		if request.method=='POST':
 			productid=request.form['productid']
-			quantity=1
+			quantity=request.form['quantity']
 			userid=current_user.id
 			order=Order(id=userid,productid=productid,quantity=quantity)
 			db.session.add(order)
@@ -164,11 +205,18 @@ def payment():
 	return render_template('payment.html',title='payment')
 
 
-##### FEEDBACK PAGE #####
+##### FEEDBACK PAGE  #####
 @login_required
 @app.route('/feedback',methods=['GET','POST'])
 def feedback():
 	return render_template('feedback.html',title='feedback')
+
+##### FEEDBACK Submit Redirect #####
+@login_required
+@app.route('/feedback_submit',methods=['GET','POST'])
+def feedback_submit():
+	flash('Your response have been recorded','success')
+	return redirect(url_for('feedback'))
 
 '''TEST ROUTES'''
 ##### description PAGE #####
@@ -177,5 +225,4 @@ def feedback():
 def details(pid):
 	product=Product.query.filter_by(productid=pid).first()
 	return render_template('details.html',title='details',products=product)
-
 
