@@ -8,6 +8,7 @@
   <div class="row ">
     <aside class="col-md-6">
       <article class="gallery-wrap">
+        <br>
         <div class="img-big-wrap mt-3">
           <div> <a href="#"><img src="{{url_for('static', filename='uploads/' + products.image + '.jpg')}}" alt="{{products.product_name}}" class="card-img-top" height="500" width="500" align="center"></a></div>
         </div> 
@@ -52,31 +53,27 @@
         </div> <!-- price-detail-wrap .// -->
         <p>Virgil Abloh’s Off-White is a streetwear-inspired collection that continues to break away from the conventions of mainstream fashion. Made in Italy, these black and brown Odsy-1000 low-top sneakers.</p>
         <dl class="row">
-          <dt class="col-sm-3">Model#</dt>
-          <dd class="col-sm-9">Odsy-1000</dd>
+          <dt class="col-sm-5">Model#</dt>
+          <dd class="col-sm-5">Odsy-1000</dd>
 
-          <dt class="col-sm-3">Color</dt>
-          <dd class="col-sm-9">Brown</dd>
+          <dt class="col-sm-5">Color</dt>
+          <dd class="col-sm-5">Brown</dd>
 
-          <dt class="col-sm-3">Delivery</dt>
-          <dd class="col-sm-9">Russia, USA, and Europe </dd>
+          <dt class="col-sm-5">Delivery</dt>
+          <dd class="col-sm-5">Russia, USA, and Europe </dd>
         </dl>
         <hr>
-        <div class="form-row">
-          <div class="form-group col-md flex-grow-0">
-            <label>Quantity</label>
+        <div class="form-row">   
 
-            <!-- <div class="input-group mb-3 input-spinner">
-              <div class="input-group-prepend">
-                <button class="btn btn-light" type="button" id="button-plus"> + </button>
-              </div>
-              <input type="text" class="form-control" value="1">
-              <div class="input-group-append">
-                <button class="btn btn-light" type="button" id="button-minus"> − </button>
-              </div>
-            </div> -->
+          <!-- <label>Quantity</label> -->
+          <!-- ADD/REM QTY BUTTONS --> 
+          <!-- <div class="form-group col-md-25">
+            <div class="form-group text-right col-md-6" width="100%">
+              <input class="form-control" placeholder="Qty." type="number">
+            </div>
+          </div>  -->
+          <!-- END BUTTONS -->         
 
-          </div> <!-- col.// -->
           <div class="form-group col-md">
             <label>Select size</label>
             <div class="mt-1">
@@ -93,8 +90,28 @@
                 <div class="custom-control-label">Large</div>
               </label>
             </div>
-          </div> <!-- col.// -->
-        </div> <!-- row.// -->
+          </div> 
+        </div> 
+
+        <div class="form-row">
+          <div class="form-group col-md">
+            <label>Select Color</label>
+            <div class="mt-1">
+              <label class="custom-control custom-radio custom-control-inline">
+                <input type="radio" name="select_size" checked="" class="custom-control-input">
+                <div class="custom-control-label">Golden Crown</div>
+              </label>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input type="radio" name="select_size" class="custom-control-input">
+                <div class="custom-control-label">Silver Jewel</div>
+              </label>
+              <label class="custom-control custom-radio custom-control-inline">
+                <input type="radio" name="select_size" class="custom-control-input">
+                <div class="custom-control-label">Black Void</div>
+              </label>
+            </div>
+          </div> 
+        </div>
         <!-- <a href="#" class="btn  btn-primary"> Buy now </a> -->
 
         {% if current_user.is_authenticated %}  
@@ -103,7 +120,8 @@
           <button type="submit" class="btn btn-primary"><span class="text">Add to cart</span> <i class="fa fa-shopping-cart"></i></button><!-- ADD TO CART BUTTON --> 
         </form>
         {% endif%}
-        
+        <br>
+
         <!-- <a href="/add_to_cart" class="btn  btn-outline-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a> -->
       </article> <!-- product-info-aside .// -->
     </main> <!-- col.// -->
