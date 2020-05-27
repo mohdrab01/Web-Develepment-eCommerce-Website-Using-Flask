@@ -59,6 +59,7 @@
                 <tr>
                   <th scope="row" class="border-0 align-middle">
                     <div class="col">
+                      <a href="details/{{p.productid}}">
                       <div class="card" align="middle">
                         <br>
                         <img src="{{url_for('static', filename='uploads/' + p.image + '.jpg')}}" alt="{{p.product_name}}" class="img-fluid rounded shadow-sm" height="150" width="150" align="middle">
@@ -75,6 +76,7 @@
                           </form>
                         </div> -->
                       </div>
+                      </a>
                     </div>
                   </th>
                   <td class="border-0 align-middle">
@@ -82,19 +84,23 @@
                     <p class="text-center"><strong>{{p.discounted_price}} Rs.</strong></p>
                   </td>
                   <!-- <td class="border-0 align-middle"><strong>3</strong></td> -->
+
                   <!-- ADD/REM QTY BUTTONS -->
                   <td class="border-0 align-middle">                    
                     <div class="center">
                       <p></p>
                       <div class="form-row">
                         <div class="form-group text-right col-md-6">
-                          <input class="form-control" placeholder="Qty." type="number">
+                          <input class="form-control" name="quantity" placeholder="Qty." type="number">
                         </div>
                       </div> 
                     </div>  
                   </td>
                   <!-- END BUTTONS -->
-                  <td class="border-0 align-middle" align="middle"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a></td>
+
+                  <td class="border-0 align-middle" align="middle">
+                    <a href="/del_from_cart/{{p.productid}}" class="text-dark"><i class="fa fa-trash"></i></a>
+                  </td>
                 </tr>
                 <br> 
                 {% endfor %}
@@ -155,7 +161,7 @@
                 <h5 class="font-weight-bold">$400.00</h5>
               </li>
             </ul> -->
-            <a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+            <a href="/payment" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
           </div>
         </div>
       </div>
