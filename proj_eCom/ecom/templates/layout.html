@@ -59,6 +59,7 @@
             <ul class="nav">
               <li class="nav-item"><a href="#" class="nav-link"> About </a></li>
               <li class="nav-item"><a href="#" class="nav-link"> Help </a></li>
+              <li class="nav-item"><a href="/feedback" class="nav-link"> Feedback </a></li>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> USD </a>
                 <ul class="dropdown-menu dropdown-menu-right">
@@ -82,7 +83,8 @@
     <!-- header small close -->
     </div>
     <!-- Jumbotron header close -->     
-  </body>
+
+  <!-- </body> -->
 
 
   <!-- SITE header -->
@@ -90,9 +92,12 @@
       <!-- NAVBAR -->
       <nav class="navbar navbar-expand-sm navbar-light mt-0">
         <!-- <aside class="col-md-1"> -->
-        <a class="navbar-brand mt-0" href="/home">
-          <img src="static/uploads/logo1.png" height="30" alt="mdb logo">
-        </a> 
+
+          <!-- SITE LOGO -->
+     <!--    <a class="navbar-brand mt-0" href="/home">
+          <img src="static/uploads/logo1.png" height="30" alt="mdb logo"> 
+        </a>  -->
+        
         <!-- </aside> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
           <span class="navbar-toggler-icon"></span> 
@@ -104,18 +109,17 @@
              
             {% if current_user.is_authenticated %}     
 
-            <li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart" style="padding-right: 10px;"></i></a></li>
-            <li class="nav-item"><a class="nav-link" href="/orders"><span class="text" style="padding-right: 10px;"><strong> My Orders </strong></span></a></li>
-            <li class="nav-item"><a class="nav-link" href="/logout"><span class="text"><strong> Logout </strong></span><i class="fas fa-sign-out-alt" style="padding-right: 10px;"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="/cart"><i class="fas fa-shopping-cart" style="padding-right: 5px;"></i><strong>Cart </strong></a></li>
+            <li class="nav-item"><a class="nav-link" href="/orders"><span class="text" style="padding-right: 10px;"><strong> Orders </strong></span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/logout"><span class="text"><strong> Logout </strong></span></a></li>
 
             {% else %}
 
             <li class="nav-item"><a class="nav-link" href="/signup"><span class="text" style="padding-right: 10px;"><strong> Signup </strong></span></a></li> 
-            <li class="nav-item"><a class="nav-link" href="/login"><span class="text"><strong> Login </strong></span><i class="fas fa-sign-in-alt" style="padding-right: 10px;"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="/login"><span class="text"><strong> Login </strong></span></a></li>
 
             {% endif %}
 
-            <li class="nav-item"><a class="nav-link" href="/feedback"><span class="text" style="padding-right: 10px;"><strong> Feedback </strong></span></a></li>
           </ul>
           <!-- </div>  -->
         </div> 
@@ -124,6 +128,7 @@
     </header> 
     <br><br>
     <!-- SITE Header Close -->
+  </body>
 
     <!-- FLASH messages -->
     <div class="row"> 
@@ -216,6 +221,7 @@
   <br>
   <br>
   <!-- Site Footer End -->
+
 
 </html>
    
