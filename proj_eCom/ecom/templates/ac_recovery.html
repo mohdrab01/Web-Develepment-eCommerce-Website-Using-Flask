@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<center>
+
+<br>
+<div class="login-page">
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title mb-4">Recovery</h4>
+    <form  action="/ac_recovery" method="POST">
+      <div class="form-group">
+        <label>Enter your registered Email</label>
+        <input name="email" class="form-control" placeholder="ex. name@gmail.com" type="email">
+      </div> 
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block"> Submit </button>
+      </div> 
+    </form>
+  </div> 
+</div> 
+</div>
+</center>
+
+{% endblock content %}
