@@ -2,8 +2,9 @@
 {% block content %}
 
 <center>
-  
-<div class="login-page">
+<br>
+
+<!-- <div class="login-page">
   <div class="form">
     <form action="/signup" method="POST">
       <div class="input-group">
@@ -20,7 +21,55 @@
       </div>
     </form>
   </div>
+</div> -->
+
+<div class="login-page">
+<div class="card">
+  <article class="card-body">
+  <header class="mb-4">
+    <h4 class="card-title">Sign up</h4>
+  </header>
+  <hr>
+  <form action="/signup" method="POST">
+  <!-- div class="form-row">
+    <div class="col form-group">
+      <label>First name</label>
+      <input name="username" type="text" class="form-control" placeholder="">
+    </div> 
+    <div class="col form-group">
+      <label>Last name</label>
+      <input type="text" class="form-control" placeholder="">
+    </div> 
+  </div>  -->
+  <div class="form-group">
+    <label>First name</label>
+    <input name="username" type="text" class="form-control" placeholder="">
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input name="email" type="email" class="form-control" placeholder="">
+    <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div> 
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>Create password</label>
+      <input type="password" class="form-control" type="password">
+    </div> 
+    <div class="form-group col-md-6">
+      <label>Repeat password</label>
+      <input class="form-control" type="password">
+    </div> 
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary btn-block"> Register  </button>
+  </div> 
+</form>
+<hr>
+<p class="text-center"> Existing User? <a href="/login"> Login  </a></p>
+</article> 
+</div> 
 </div>
+
 
 </center>
 
