@@ -5,9 +5,9 @@ A simple e-Commerce Website developled using FLASK-PYTHON-SQLALCHEMY!!
 
 ############################   DRAWBACKS   ############################
 
-Unable to add similar item to cart more than once
+Unable to add an item to cart more than once
 
-Cannot place order for it more than once
+Cannot place order for items more than once
 
 Cannot delete an item from cart
 
