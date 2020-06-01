@@ -2,33 +2,6 @@
 {% block content %}
 <center>
 <br>
-<!-- <div class="container">
-  <div class="row">
-    {% for p in product %}
-    <br>
-    <div class="col-md-5">
-      <div class="card">
-      <img src="{{url_for('static', filename='uploads/' + p.image + '.jpg')}}" alt="{{p.product_name}}" class="card-img-top" height="250" width="250">
-        <div class="card-body">
-          <h5 class="text-center">{{p.product_name}}</h5>
-          <p class="text-center"><strike>{{p.regular_price}}</strike>Rs.</p>
-          <p class="text-center">{{p.discounted_price}} Rs.</p>
-          <p class="text-center">{{p.rating}}</p>
-        </div>
-        <div class="card-footer">
-          <form action="{{url_for('place_order')}}" method="POST">
-            <input type="hidden" name="productid" value="{{p.productid}}">
-            <button type="submit" class="btn-sm btn-warning">Place Order for this item</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <br> 
-    <br>
-    {% endfor %}
-  </div>
-</div> -->
-
   <div class="pb-0">
     <div class="container">
       <div class="row">
@@ -55,70 +28,95 @@
               </thead>
               <tbody>
                 <!-- <tr> -->
-                {% for p in product %}
+
+<!--                 {% for p in product %}
+                
                 <tr>
                   <th scope="row" class="border-0 align-middle">
                     <div class="col">
-                      <a href="details/{{p.productid}}">
+                      <a href="details/{{p[catogery]}}/{{p[productid]}}">
                       <div class="card" align="middle">
                         <br>
-                        <img src="{{url_for('static', filename='uploads/' + p.image + '.jpg')}}" alt="{{p.product_name}}" class="img-fluid rounded shadow-sm" height="150" width="150" align="middle">
+                        
+                        <img src="{{url_for('static', filename='uploads/p[image].jpg')}}" alt="{{p[product_name]}}" class="img-fluid rounded shadow-sm" height="150" width="150" align="middle">
+
+                        <div class="card-body">
+                          <h5 class="mb-0">
+                            <strong class="text-dark d-inline-block align-middle">{{p[product_name]}}</strong>
+                          </h5>
+                          <p class="text-muted font-weight-normal font-italic d-block">{{p[rating]}}</p>
+                        </div>
+                      </div>
+                      </a>
+                    </div>
+                  </th>
+
+                  <td class="border-0 align-middle">
+                    <p class="text-center"><strong>{{p[discounted_price]}} Rs.</strong></p>
+                  </td>
+
+                  <td class="border-0 align-middle">   
+                      <p class="text-center"><strong>{{p[quantity]}}</strong></p>
+                  </td>
+
+                  <td class="border-0 align-middle" align="middle">
+                    <a href="/del_from_cart/{{p[productid]}}" class="text-dark"><i class="fa fa-trash"></i></a>
+                  </td>
+
+                </tr>
+                <br>                
+
+                {% endfor %} -->
+
+                {% for p in product %}
+                
+                <tr>
+                  <th scope="row" class="border-0 align-middle">
+                    <div class="col">
+                      <a href="details/{{p.catogery}}/{{p.productid}}">
+                      <div class="card" align="middle">
+                        <br>
+                        
+                        <img src="{{url_for('static', filename='uploads/'+p.image+'.jpg')}}" alt="{{p.product_name}}" class="img-fluid rounded shadow-sm" height="150" width="150" align="middle">
+
                         <div class="card-body">
                           <h5 class="mb-0">
                             <strong class="text-dark d-inline-block align-middle">{{p.product_name}}</strong>
                           </h5>
                           <p class="text-muted font-weight-normal font-italic d-block">{{p.rating}}</p>
                         </div>
-                        <!-- <div class="card-footer">
-                          <form action="{{url_for('place_order')}}" method="POST">
-                            <input type="hidden" name="productid" value="{{p.productid}}">
-                            <button type="submit" class="btn-sm btn-warning">Place Order for this item</button>
-                          </form>
-                        </div> -->
                       </div>
                       </a>
                     </div>
                   </th>
+
                   <td class="border-0 align-middle">
-                    <p class="text-center"><strike>{{p.regular_price}}</strike>Rs.</p>
                     <p class="text-center"><strong>{{p.discounted_price}} Rs.</strong></p>
                   </td>
                   <!-- <td class="border-0 align-middle"><strong>3</strong></td> -->
-
+                  
+                  {% for c in cart%}
+                  {% if c.productid == p.productid %}
                   <!-- ADD/REM QTY BUTTONS -->
                   <td class="border-0 align-middle">                    
-                    <div class="center">
-                      <p></p>
-                      <div class="form-row">
-                        <div class="form-group text-right col-md-6">
-                          <input class="form-control" name="quantity" placeholder="Qty." type="number">
-                        </div>
-                      </div> 
-                    </div>  
+                    <!-- <div class="center"> -->
+                      <p class="text-center"><strong>{{c.quantity}}</strong></p>
                   </td>
                   <!-- END BUTTONS -->
+                  {% endif %}
+                  {% endfor %}
 
+                  <!-- REMOVE FROM CART -->
                   <td class="border-0 align-middle" align="middle">
                     <a href="/del_from_cart/{{p.productid}}" class="text-dark"><i class="fa fa-trash"></i></a>
                   </td>
+                  <!-- REMOVE FROM CART ends -->
+
                 </tr>
                 <br> 
+                
+
                 {% endfor %}
-              <!-- </tr> -->
-                <!-- EXAMPLE : SINGLE STOCK IN CART -->
-                <!-- <tr>
-                  <th scope="row" class="border-0">
-                    <div class="p-2">
-                      <img src="https://res.cloudinary.com/mhmd/image/upload/v1556670479/product-1_zrifhn.jpg" alt="" width="70" class="img-fluid rounded shadow-sm">
-                      <div class="ml-3 d-inline-block align-middle">
-                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">Timex Unisex Originals</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: Watches</span>
-                      </div>
-                    </div>
-                  </th>
-                  <td class="border-0 align-middle"><strong>$79.00</strong></td>
-                  <td class="border-0 align-middle"><strong>3</strong></td>
-                  <td class="border-0 align-middle"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a></td>
-                </tr> -->
                 
               </tbody>
             </table>
@@ -148,26 +146,31 @@
             <textarea name="" cols="30" rows="2" class="form-control"></textarea>
           </div>
         </div>
+
         <div class="col-lg-6">
           <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
           <div class="p-4">
             <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
+
             <!-- EXAMPLE LIST of TOTAL AMT CALCULATION -->
-            <!-- <ul class="list-unstyled mb-4">
-              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>$390.00</strong></li>
-              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$10.00</strong></li>
-              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
+            <ul class="list-unstyled mb-4">
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong> &#8377;{{subtot}}</strong></li>
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" name="sh">Shipping and handling</strong><strong>&#8377;10.00</strong></li>
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" name="tax">Tax</strong><strong>&#8377;5.00</strong></li>
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted" name="tax">Coupoun</strong><strong>&#8377;0.00</strong></li>
               <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
-                <h5 class="font-weight-bold">$400.00</h5>
+                <h5 class="font-weight-bold">&#8377;{{tot}}</h5>
               </li>
-            </ul> -->
+            </ul>
+
             <a href="/payment" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
           </div>
         </div>
+        
       </div>
 
+<!-- COUPOUN CODE AND ORDER INFO SECTIONS END -->
 
-<!-- COUPOUN CODE AND ORDER INFO SECTIONS ENDING -->
     </div>
   </div>
 </div>
