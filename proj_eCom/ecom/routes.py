@@ -1,35 +1,24 @@
 from flask import render_template, url_for, flash, redirect, request
 from ecom import app, db
-from ecom.models import User, Product,Cart,Order
+from ecom.models import *
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 import os
 
-
-@app.route('/')
-def root():
-	if current_user.is_authenticated:
-		return redirect(url_for('index'))
-	else:
-		return redirect(url_for('home'))
-
 ##### HOME PAGE #####
-@app.route('/home')
+@app.route('/')
 def home():
-	if current_user.is_authenticated:
-		return redirect(url_for('index'))
-	product=Product.query.all()
-	return render_template('home.html',title='home',products=product)
-	# return render_template('home.html',title='home')
+	return render_template('home.html',title='home')
+
 
 ##### SIGN UP PAGE #####
 @app.route('/signup',methods=['GET','POST'])
 def signup():
 	if current_user.is_authenticated:
-		flash("First logout inorder to signup!",'primary')
-		return redirect(url_for('index'))
+		flash("First logout inorder to signup!",'warning')
+		return redirect(url_for('home'))
 	if request.method=='POST':
-		user=User(username=request.form['username'],email=request.form['email'],password=request.form['password'])
+		user=User(username=request.form['username'],email=request.form['email'],phno=request.form['phno'],password=request.form['password'])
 		db.session.add(user)
 		db.session.commit()
 		flash('Registered succesfully!','success')
@@ -40,7 +29,7 @@ def signup():
 @app.route('/login',methods=['GET','POST'])
 def login():
 	if current_user.is_authenticated:
-		return redirect(url_for('index'))
+		return redirect(url_for('home'))
 	error=None
 	if request.method=='POST':
 		email=request.form['email']
@@ -49,12 +38,22 @@ def login():
 		if user and user.password==password:
 			login_user(user)
 			flash('You are logged in','success')
-			return redirect(url_for('index'))
+			return redirect(url_for('home'))
 		else:
 			error = 'Invalid username or password. Please try again!'
 			flash('Invalid email or Password!','danger')
 		return redirect(url_for('home'))
 	return render_template('login.html',title='login',error=error)
+
+##### ABOUT US PAGE #####
+@app.route('/about')
+def about():
+	return render_template('about.html',title='about')
+
+##### HELP PAGE #####
+@app.route('/help')
+def help():
+	return render_template('help.html',title='help')
 
 ##### A/C RECOVERY PAGE #####
 @app.route('/ac_recovery',methods=['GET','POST'])
@@ -73,11 +72,10 @@ def ac_recovery():
 
 ##### INDEX PAGE #####
 @login_required
-@app.route('/index')
-def index():
-	product=Product.query.all()
-	return render_template('index.html',title='index',products=product)
-	# return render_template('index.html',title='index')
+@app.route('/index/<string:catogery>',methods=['GET','POST'])
+def index(catogery):
+	product=Product.query.filter_by(catogery=catogery)
+	return render_template('index.html',title='index',products=product,catogery=catogery)
 
 ##### LOGOUT PAGE #####
 @login_required
@@ -86,6 +84,14 @@ def logout():
 	logout_user()
 	return redirect(url_for('home'))
 
+##### USER PROFILE PAGE #####
+@login_required
+@app.route('/user_ac')
+def user_ac():
+	uid=current_user.id
+	user=User.query.filter_by(id=uid).first()
+	return render_template('user_ac.html',title='user_ac',user=user)
+
 ##### MY CART PAGE #####
 @login_required
 @app.route('/cart')
@@ -93,16 +99,21 @@ def cart():
 	##change made ##
 	userid=current_user.id
 	cart=Cart.query.filter_by(id=userid).all()
+	subtot=0
+	shipping=10
+	tax=5
 	if cart :
 		# product=Product.query.filter_by(productid=cart.productid).all()
 		product=[]
 		for c in cart:			
 			p=Product.query.filter_by(productid=c.productid).first()
+			subtot+=p.discounted_price
 			product.append(p)
-		return render_template('cart.html',product=product)
+		tot=subtot+shipping+tax
+		return render_template('cart.html',product=product,cart=cart,subtot=subtot,tot=tot)
 	else:
 		flash('Your cart is Empty ','warning')
-		return redirect(url_for('index'))
+		return redirect(url_for('home'))
 
 
 ##### ADD GADGET TO HOME AND INDEX #####
@@ -114,21 +125,18 @@ def cart():
 def add_to_cart():
 	if request.method=='POST':
 		productid=request.form['productid']
-		quantity=1
+		quantity=request.form['quantity']
 		userid=current_user.id
 		cart=Cart(id=userid,productid=productid,quantity=quantity)
 		cart1=Cart.query.filter_by(id=userid,productid=productid).first()
 		if cart1 :
 			flash('Item already in cart!','warning')
-			return redirect(url_for('index'))	
+			return redirect(url_for('home'))	
 		else:
-			# db.session.begin_nested()
 			db.session.add(cart)
-			# db.session.flush()
 			db.session.commit()
 			flash('Item added to cart succesfully!','success')
-			return redirect(url_for('index'))
-	# return render_template('cart.html',title='cart')
+			return redirect(url_for('home'))
 
 ##### DELETE GADGET FROM CART #####
 # @login_required
@@ -160,24 +168,28 @@ def add_to_cart():
 def place_order():
 	try:
 		if request.method=='POST':
-			productid=request.form['productid']
-			quantity=request.form['quantity']
 			userid=current_user.id
-			order=Order(id=userid,productid=productid,quantity=quantity)
-			db.session.add(order)
-			# raise ValueError("Some Inegrity Constraint Error Happened")
-			# db.session.add(order)
-			db.session.commit()
-			flash('Placed order for item succesfully!','success')
-			cart=Cart.query.filter_by(id=userid,productid=productid,quantity=quantity)
-			# db.session.delete(cart)
-			cart.delete()
-			db.session.commit()
-			flash('Item removed from your cart!','success')
-			return redirect(url_for('index'))
-		# return render_template('cart.html',title='cart')
+			order_state='Out For Delivery'
+			cart=Cart.query.filter_by(id=userid)
+			if cart:
+				for c in cart:
+					order_id=c.productid
+					ordered_quantity=c.quantity
+					order=Order(id=userid,order_id=order_id,ordered_quantity=ordered_quantity,order_state=order_state)
+					db.session.add(order)
+					'''del from cart'''
+					# cart=Cart.query.filter_by(id=userid,productid=productid,quantity=quantity)
+					# cart.delete()
+					# db.session.commit()
+					# flash('Item removed from your cart!','success')		
+				db.session.commit()
+				flash('Placed order for item succesfully!','success')	
+				return redirect(url_for('home'))
+			else:
+				flash('Cannot place order, No items in Cart!','danger')	
+				return redirect(url_for('home'))
 	except :
-		flash('Cannot place order, as Item already is in cart!','warning')
+		flash('Cannot place order, as Item already ordered!','warning')
 		return redirect(url_for('cart'))
 
 
@@ -188,21 +200,30 @@ def orders():
 	userid=current_user.id
 	order=Order.query.filter_by(id=userid).all()
 	if order :
-		product=[]
-		for o in order:				
-			p=Product.query.filter_by(productid=o.productid).first()
-			product.append(p)
+		product=Product.query.all()
 		return render_template('orders.html',product=product,order=order,title='orders')
+
 	else:
 		flash('You have no orders yet! ','warning')
-		return redirect(url_for('index'))
+		return redirect(url_for('home'))
 
 ##### PAYMENT PAGE #####
 @login_required
 @app.route('/payment',methods=['GET','POST'])
 def payment():
-	flash('Make your payment!','primary')
-	return render_template('payment.html',title='payment')
+	userid=current_user.id
+	cart=Cart.query.filter_by(id=userid).all()
+	subtot=0
+	shipping=10
+	tax=5
+	if cart :
+		for c in cart:			
+			p=Product.query.filter_by(productid=c.productid).first()
+			subtot+=p.discounted_price
+		tot=subtot+shipping+tax
+	# product=Product.query.all()
+	flash('Make your payment!','home')
+	return render_template('payment.html',title='payment',subtot=subtot,tot=tot)
 
 
 ##### FEEDBACK PAGE  #####
@@ -220,9 +241,23 @@ def feedback_submit():
 
 '''TEST ROUTES'''
 ##### description PAGE #####
-@login_required
-@app.route("/details/<string:pid>",methods=['GET','POST'])
-def details(pid):
+# @login_required
+@app.route("/details/<string:catogery>/<string:pid>",methods=['GET','POST'])
+def details(catogery,pid):
 	product=Product.query.filter_by(productid=pid).first()
-	return render_template('details.html',title='details',products=product)
+	if catogery=='Mobile':
+		features=Mobile.query.filter_by(productid=pid).first()
+	elif catogery=='Laptop':
+		features=Laptop.query.filter_by(productid=pid).first()
+	elif catogery=='Tv':
+		features=Tv.query.filter_by(productid=pid).first()
+	elif catogery=='Refrigerator':
+		features=Refrigerator.query.filter_by(productid=pid).first()
+	elif catogery=='WashingMachine':
+		features=WashingMachine.query.filter_by(productid=pid).first()
+	else:
+		flash('Invalid Request!',danger)
+		return redirect(url_for('home'))
+
+	return render_template('details.html',title='details',products=product,catogery=catogery,features=features)
 
