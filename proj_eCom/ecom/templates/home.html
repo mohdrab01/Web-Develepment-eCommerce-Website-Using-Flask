@@ -5,31 +5,66 @@
 <br>  
 <div class="container">
   <div class="row">
-    {% for p in products %}
     <br>
+
     <div class="col">
-      <div class="card mt-5" style="width: 25rem; height: 44rem">
-      <img src="{{url_for('static', filename='uploads/' + p.image + '.jpg')}}" alt="{{p.product_name}}" class="card-img-top" height="250" width="250">
+      <div class="card mt-5" style="width: 25rem; height: 33rem">
         <div class="card-body">
-          <h5 class="text-center">{{p.product_name}}</h5>
-          <p class="text-center"><strike>{{p.regular_price}}</strike>Rs.</p>
-          <p class="text-center">{{p.discounted_price}} Rs.</p>
-          <p class="text-center">{{p.rating}}</p>
+          <img src="{{url_for('static', filename='uploads/lappy1.jpg')}}" alt="laptops" class="card-img-top" height="250" width="250">
         </div>
         <div class="card-footer">
-          <a href="/details/{{p.productid}}" class="float-left btn btn-primary" > <span class="text">Details</span></a>
-          <!-- <form action="{{url_for('add_to_cart')}}" method="POST">
-            <input type="hidden" name="productid" value="{{p.productid}}">
-            <button type="submit" class="btn-sm btn-warning">Add to Cart</button>
-          </form> -->
+          <a href="/index/Laptop" class="float-middle btn btn-light" > <span class="text">LAPTOPS</span></a>
         </div>
       </div>
     </div>
-    <br> 
-    {% endfor %}
+
+    <div class="col">
+      <div class="card mt-5" style="width: 25rem; height: 33rem">
+        <div class="card-body">
+          <img src="{{url_for('static', filename='uploads/mobile1.jpg')}}" alt="mobiles" class="card-img-top" height="250" width="250">
+        </div>
+        <div class="card-footer">
+          <a href="/index/Mobile" class="float-middle btn btn-light" > <span class="text">MOBILES</span></a>
+        </div>
+      </div>
+    </div>
+
+     <div class="col">
+      <div class="card mt-5" style="width: 25rem; height: 33rem">
+        <div class="card-body">
+          <img src="{{url_for('static', filename='uploads/tv1.jpg')}}" alt="tvs" class="card-img-top" height="250" width="250">
+        </div>
+        <div class="card-footer">
+          <a href="/index/Tv" class="float-middle btn btn-light" > <span class="text">TVs</span></a>
+        </div>
+      </div>
+    </div>
+
+     <div class="col">
+      <div class="card mt-5" style="width: 25rem; height: 33rem">
+        <div class="card-body">
+          <img src="{{url_for('static', filename='uploads/fridge1.jpg')}}" alt="fridges" class="card-img-top" height="250" width="250">
+        </div>
+        <div class="card-footer">
+          <a href="/index/Refrigerator" class="float-middle btn btn-light" > <span class="text">REFRIGERATORS</span></a>
+        </div>
+      </div>
+    </div>
+
+     <div class="col">
+      <div class="card mt-5" style="width: 25rem; height: 33rem">
+        <div class="card-body">
+          <img src="{{url_for('static', filename='uploads/wash1.jpg')}}" alt="washingmachines" class="card-img-top" height="250" width="250">
+        </div>
+        <div class="card-footer">
+          <a href="/index/WashingMachine" class="float-middle btn btn-light" > <span class="text">WASHING MACHINES</span></a>
+        </div>
+      </div>
+    </div>
     <br>
   </div>
 </div>
 <br>
 </center>
+
 {% endblock content %}
