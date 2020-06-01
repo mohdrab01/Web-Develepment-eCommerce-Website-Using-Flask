@@ -5,33 +5,43 @@
 <br> 
 <div class="container">
   <div class="row">
+
     {% for p in products %}
+
     <br>
     <div class="col">
       <div class="card mt-5" style="width: 25rem; height: 44rem">
       <img src="{{url_for('static', filename='uploads/' + p.image + '.jpg')}}" alt="{{p.product_name}}" class="card-img-top" height="250" width="250">
+
         <div class="card-body">
           <h5 class="text-center">{{p.product_name}}</h5>
           <p class="text-center"><strike>{{p.regular_price}}</strike>Rs.</p>
           <p class="text-center">{{p.discounted_price}} Rs.</p>
           <p class="text-center">{{p.rating}}</p>
         </div>
+
         <div class="card-footer">
-          <a href="details/{{p.productid}}" class="float-left btn btn-primary" > <span class="text">Details</span></a><!-- DETAILS BUTTON -->                   
+          <!-- DETAILS BUTTON -->  
+          <a href="/details/{{catogery}}/{{p.productid}}" class="float-middle btn btn-primary" > <span class="text">Details</span></a>   
           <!-- <form action="{{url_for('add_to_cart')}}" method="POST" align='right'>
             <input type="hidden" name="productid" value="{{p.productid}}">
             <button type="submit" class="btn-sm btn-warning">Add to Cart</button> ADD TO CART BUTTON 
           </form> -->
-          <form action="{{url_for('add_to_cart')}}" method="POST" align='right'>
+
+          <!-- ADD TO CART BUTTON -->
+          <!-- <form action="{{url_for('add_to_cart')}}" method="POST" align='right'>
             <input type="hidden" name="productid" value="{{p.productid}}">
-            <button type="submit" class="btn btn-primary"><span class="text">Add to cart</span> <i class="fa fa-shopping-cart"></i></button><!-- ADD TO CART BUTTON --> 
-          </form>
+            <button type="submit" class="btn btn-primary"><span class="text">Add to cart </span> <i class="fa fa-shopping-cart"></i></button> 
+          </form> -->
+
         </div>
       </div>
     </div>
     <br> 
     <br>
+
     {% endfor %}
+
   </div>
 </div>
 <br>
