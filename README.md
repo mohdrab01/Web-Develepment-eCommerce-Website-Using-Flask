@@ -5,11 +5,11 @@ A simple e-Commerce Website developled using FLASK-PYTHON-SQLALCHEMY!!
 
 ############################   DRAWBACKS   ############################
 
-Unable to add an item to cart more than once
+Unable to add an item to cart more than once (Sol: Must change Constraints of DATABASE)
 
-Cannot place order for items more than once
+Cannot place order for items more than once (Sol: Must change Constraints of DATABASE)
 
-Cannot delete an item from cart
+Cannot delete an item from cart (Reason: No function available in SQLAlchemy do delete single record...only able to delete whole database)
 
 
 
