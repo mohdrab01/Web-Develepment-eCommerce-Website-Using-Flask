@@ -4,25 +4,6 @@
 <center>
 <br>
 
-<!-- <div class="login-page">
-  <div class="form">
-    <form action="/signup" method="POST">
-      <div class="input-group">
-        <input type="text" name="username" placeholder="Pick a Username"/>
-      </div>
-      <div class="input-group">
-        <input type="text" name="email" placeholder="Enter your email"/>
-      </div>
-      <div class="input-group">
-        <input type="password" name="password" placeholder="Pick a Password"/>
-      </div>
-      <div class="input-group-btn">
-        <button class="btn btn-primary" type="submit">SIGNUP</button>
-      </div>
-    </form>
-  </div>
-</div> -->
-
 <div class="login-page">
 <div class="card">
   <article class="card-body">
@@ -42,7 +23,7 @@
     </div> 
   </div>  -->
   <div class="form-group">
-    <label>First name</label>
+    <label>Full name</label>
     <input name="username" type="text" class="form-control" placeholder="">
   </div>
   <div class="form-group">
@@ -50,10 +31,14 @@
     <input name="email" type="email" class="form-control" placeholder="">
     <small class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div> 
+  <div class="form-group">
+    <label>Mobile No</label>
+    <input name="phno" type="number" class="form-control" placeholder="">
+  </div> 
   <div class="form-row">
     <div class="form-group col-md-6">
       <label>Create password</label>
-      <input type="password" class="form-control" type="password">
+      <input name="password" type="password" class="form-control" type="password">
     </div> 
     <div class="form-group col-md-6">
       <label>Repeat password</label>
@@ -70,7 +55,7 @@
 </div> 
 </div>
 
-
+<br>
 </center>
 
 {% endblock content %}
